@@ -32,7 +32,7 @@ class UserController extends Controller
     {
         $req->validate([
             'name' => ['required', 'max:25', 'string'],
-            'email' => 'required|email|unique users',
+            'email' => 'required|email|unique:users',
             'password' => 'required'
         ]);
 

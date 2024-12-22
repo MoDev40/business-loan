@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AccountsReceivable;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class AccountsReceivableController extends Controller
@@ -23,6 +24,8 @@ class AccountsReceivableController extends Controller
     public function create()
     {
         //
+        $customers = Customer::all();
+        return view('dashboard.customers.loans.create', ['customers' => $customers]);
     }
 
     /**
@@ -31,6 +34,15 @@ class AccountsReceivableController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'amount' => ['numeric', 'decimal:0', 'required'],
+            'due_date' => 'required',
+            'customer_id' => ['numeric', 'integer', 'required'],
+        ]);
+
+        AccountsReceivable::create($request->all());
+
+        return redirect()->route('receivable.index')->with('success', 'Loan registered successfully');
     }
 
     /**

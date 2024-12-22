@@ -58,6 +58,7 @@ class CustomerController extends Controller
     public function edit(Customer $customer)
     {
         //
+        return view('dashboard.customers.edit', ['customer' => $customer]);
     }
 
     /**
@@ -66,6 +67,16 @@ class CustomerController extends Controller
     public function update(Request $request, Customer $customer)
     {
         //
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:customers,email,' . $customer->id,
+            'phone' => 'required',
+            'address' => 'required'
+        ]);
+
+        $customer->update($data);
+
+        return redirect()->route('customers.index')->with('success', 'Customer updated successfully');
     }
 
     /**

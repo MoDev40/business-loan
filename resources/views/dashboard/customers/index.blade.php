@@ -40,11 +40,11 @@
                     {{$customer->address}}
                 </td>
                 <td class="flex flex-col px-6 py-4 text-start">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="{{route('customers.edit',$customer)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                     <form action="{{route('customers.destroy',$customer)}}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">
+                        <button onclick="return confirm('Are you sure you want to delete this customer?')" type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">
                             Delete
                         </button>
                     </form>

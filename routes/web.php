@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountsReceivableController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
@@ -21,3 +22,5 @@ Route::post('/auth', [UserController::class, 'authenticate'])->name('auth.authen
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 Route::resource('/dashboard/customers', CustomerController::class);
+
+Route::resource('/dashboard/loan/receivable', AccountsReceivableController::class);

@@ -13,6 +13,6 @@ class AccountsReceivablePayment extends Model
 
     public function accountsReceivable(): BelongsTo
     {
-        return $this->belongsTo(AccountsReceivable::class, 'id');
+        return $this->belongsTo(AccountsReceivable::class);
     }
 }

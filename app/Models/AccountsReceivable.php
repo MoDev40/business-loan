@@ -15,7 +15,7 @@ class AccountsReceivable extends Model
 
     public function customer(): BelongsTo
     {
-        return $this->belongsTo(Customer::class, 'id');
+        return $this->belongsTo(Customer::class);
     }
 
     public function accountsReceivablePayment(): HasMany

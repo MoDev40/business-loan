@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AccountsReceivable;
+use App\Models\AccountsReceivablePayment;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,7 @@ class AccountsReceivableController extends Controller
         //
         $request->validate([
             'amount' => ['numeric', 'decimal:0', 'required'],
-            'due_date' => 'required',
+            'due_date' => 'required|date',
             'customer_id' => ['numeric', 'integer', 'required'],
         ]);
 
@@ -56,17 +57,36 @@ class AccountsReceivableController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AccountsReceivable $accountsReceivable)
+    public function edit(String $id)
     {
-        //
+        $customers = Customer::all();
+
+        $totalPayed = AccountsReceivablePayment::with('accountsReceivable')->where('accounts_receivable_id', $id)->sum('amount');
+
+        $data = AccountsReceivable::find($id);
+
+        return view('dashboard.customers.loans.edit', ['customers' => $customers, 'totalPayed' => $totalPayed, 'data' => $data]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AccountsReceivable $accountsReceivable)
+    public function update(Request $request, String $id)
     {
-        //
+
+        $data = $request->validate([
+            'amount' => 'required|numeric|min:0',
+            'due_date' => 'required|date',
+            'customer_id' => 'required|exists:customers,id',
+            'status' => 'required|in:pending,paid,overdue',
+        ]);
+
+
+        $data = AccountsReceivable::find($id);
+
+        $data->update($request->all());
+
+        return redirect()->route('receivable.index')->with('success', 'Loan updated successfully');
     }
 
     /**

@@ -52,17 +52,37 @@ class AccountsReceivablePaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AccountsReceivablePayment $accountsReceivablePayment)
+    public function edit(String $id)
     {
-        //
+        $data = AccountsReceivablePayment::find($id);
+
+        $instance = AccountsReceivablePayment::with('accountsReceivable')->where('accounts_receivable_id', $data->accounts_receivable_id);
+
+        $loan = $instance->get()[0]->accountsReceivable->amount;
+
+        $totalPayed = $instance->sum('amount');
+
+        $max_exp_amount = ($loan + $data->amount) - $totalPayed;
+
+        return view('dashboard.customers.payment.edit', ['payment' => $data, 'max_exp_amount' => $max_exp_amount]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AccountsReceivablePayment $accountsReceivablePayment)
+    public function update(Request $request, String $id)
     {
-        //
+        $inst = AccountsReceivablePayment::find($id);
+
+        $request->validate([
+            'amount' => 'required|numeric|min:0',
+            'payment_date' => 'required|date',
+            'accounts_receivable_id' => 'required|exists:accounts_receivable,id',
+        ]);
+
+        $inst->update($request->all());
+
+        return redirect()->route('accounts_receive.index')->with('success', "Your payment has been updated successfully");
     }
 
     /**

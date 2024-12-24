@@ -31,7 +31,7 @@
                     {{$payment->payment_date}}
                 </td>
                 <td class="flex flex-col items-start px-6 py-5 text-start">
-                    <a href="" class="font-medium text-yellow-500 hover:underline">Edit</a>
+                    <a href="{{route('accounts_receive.edit',$payment)}}" class="font-medium text-yellow-500 hover:underline">Edit</a>
                     <form action="" method="post">
                         @csrf
                         @method('DELETE')

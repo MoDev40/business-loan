@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\AccountsReceivablePayment;
 use Illuminate\Http\Request;
-use Throwable;
 
 class AccountsReceivablePaymentController extends Controller
 {
@@ -14,6 +13,8 @@ class AccountsReceivablePaymentController extends Controller
     public function index()
     {
         //
+        $data = AccountsReceivablePayment::all();
+        return view('dashboard.customers.payment.index', ['payments' =>  $data]);
     }
 
     /**

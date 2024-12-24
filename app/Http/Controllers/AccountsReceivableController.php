@@ -95,8 +95,9 @@ class AccountsReceivableController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AccountsReceivable $accountsReceivable)
+    public function destroy(String $id)
     {
-        //
+        AccountsReceivable::destroy($id);
+        return redirect()->route('receivable.index')->with('success', 'Loan deleted successfully');
     }
 }

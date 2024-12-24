@@ -49,9 +49,12 @@ class AccountsReceivableController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AccountsReceivable $accountsReceivable)
+    public function show(String $id)
     {
-        //
+        $totalPayed = AccountsReceivablePayment::with('accountsReceivable')->where('accounts_receivable_id', $id)->sum('amount');
+        $data = AccountsReceivable::with('customer')->find($id);
+
+        return view('dashboard.customers.loans.show', ['data' => $data, 'totalPayed' => $totalPayed]);
     }
 
     /**
@@ -74,7 +77,7 @@ class AccountsReceivableController extends Controller
     public function update(Request $request, String $id)
     {
 
-        $data = $request->validate([
+        $request->validate([
             'amount' => 'required|numeric|min:0',
             'due_date' => 'required|date',
             'customer_id' => 'required|exists:customers,id',

@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountsReceivableController;
 use App\Http\Controllers\AccountsReceivablePaymentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,7 @@ Route::post('/auth', [UserController::class, 'authenticate'])->name('auth.authen
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 Route::resource('/dashboard/customers', CustomerController::class);
+Route::resource('/dashboard/suppliers', SupplierController::class);
 
 Route::resource('/dashboard/loan/receivable', AccountsReceivableController::class);
 Route::resource('/dashboard/payment/accounts_receive', AccountsReceivablePaymentController::class);

@@ -88,8 +88,9 @@ class AccountsReceivablePaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AccountsReceivablePayment $accountsReceivablePayment)
+    public function destroy(String $id)
     {
-        //
+        AccountsReceivablePayment::destroy($id);
+        return redirect()->route('accounts_receive.index')->with('success', "Your payment has been deleted successfully");
     }
 }

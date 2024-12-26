@@ -7,7 +7,6 @@ use App\Models\AccountsPayablePayment;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
-use function Ramsey\Uuid\v1;
 
 class AccountsPayableController extends Controller
 {
@@ -55,6 +54,10 @@ class AccountsPayableController extends Controller
     public function show(string $id)
     {
         //
+        $totalPayed = AccountsPayablePayment::with('accountsPayable')->where('accounts_payable_id', $id)->sum('amount');
+        $data = AccountsPayable::with('supplier')->find($id);
+
+        return view('dashboard.suppliers.loans.show', ['data' => $data, 'totalPayed' => $totalPayed]);
     }
 
     /**

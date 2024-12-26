@@ -47,10 +47,10 @@
                 </td>
                 <td class="flex flex-col px-6 py-4 text-start">
                     <a href="{{route('suppliers.edit',$supplier)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    <form action="" method="post">
+                    <form action="{{route('suppliers.destroy',$supplier)}}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button onclick="return confirm('Are you sure you want to delete this customer?')" type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">
+                        <button onclick="return confirm('Are you sure you want to delete this record? all related data will be deleted')" type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">
                             Delete
                         </button>
                     </form>

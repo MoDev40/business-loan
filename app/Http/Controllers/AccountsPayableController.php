@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\AccountsPayable;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
+
+use function Ramsey\Uuid\v1;
 
 class AccountsPayableController extends Controller
 {
@@ -24,6 +27,8 @@ class AccountsPayableController extends Controller
     public function create()
     {
         //
+        $suppliers = Supplier::all();
+        return view('dashboard.suppliers.loans.create', ['suppliers' => $suppliers]);
     }
 
     /**
@@ -32,6 +37,15 @@ class AccountsPayableController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'amount' => 'required|numeric|min:0',
+            'due_date' => 'required|date',
+            'supplier_id' => 'required|exists:suppliers,id',
+        ]);
+
+        AccountsPayable::create($request->all());
+
+        return redirect()->route('payable.index')->with('success', 'Loan registered successfully');
     }
 
     /**

@@ -47,7 +47,7 @@
                 </td>
                 <td class="flex flex-col items-start px-6 py-5 text-start">
                     <a href="" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Pay</a>
-                    <a href="" class="font-medium text-yellow-500 hover:underline">Edit</a>
+                    <a href="{{route('payable.edit',$loan)}}" class="font-medium text-yellow-500 hover:underline">Edit</a>
                     <form action="" method="post">
                         @csrf
                         @method('DELETE')

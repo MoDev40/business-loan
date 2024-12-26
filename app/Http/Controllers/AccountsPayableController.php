@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AccountsPayable;
+use App\Models\AccountsPayablePayment;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
@@ -61,7 +62,10 @@ class AccountsPayableController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $suppliers = Supplier::all();
+        $data = AccountsPayable::find($id);
+        $totalPayed = AccountsPayablePayment::with('accountsPayable')->where('accounts_payable_id', $data->id)->sum('amount');
+        return view('dashboard.suppliers.loans.edit', ['data' => $data, 'totalPayed' => $totalPayed, 'suppliers' => $suppliers]);
     }
 
     /**
@@ -69,7 +73,18 @@ class AccountsPayableController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'amount' => 'required|numeric|min:0',
+            'due_date' => 'required|date',
+            'supplier_id' => 'required|exists:suppliers,id',
+            'status' => 'required|in:pending,paid,overdue',
+        ]);
+
+        $payable = AccountsPayable::find($id);
+
+        $payable->update($request->all());
+
+        return redirect()->route('payable.index')->with('success', 'Loan updated successfully');
     }
 
     /**

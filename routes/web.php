@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountsPayableController;
+use App\Http\Controllers\AccountsPayablePaymentController;
 use App\Http\Controllers\AccountsReceivableController;
 use App\Http\Controllers\AccountsReceivablePaymentController;
 use App\Http\Controllers\CustomerController;
@@ -24,9 +25,12 @@ Route::get('/', [UserController::class, 'login']);
 Route::post('/auth', [UserController::class, 'authenticate'])->name('auth.authenticate');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
 Route::resource('/dashboard/customers', CustomerController::class);
 Route::resource('/dashboard/suppliers', SupplierController::class);
 
 Route::resource('/dashboard/loan/payable', AccountsPayableController::class);
+Route::resource('/dashboard/payment/accounts_payable', AccountsPayablePaymentController::class);
+
 Route::resource('/dashboard/loan/receivable', AccountsReceivableController::class);
 Route::resource('/dashboard/payment/accounts_receive', AccountsReceivablePaymentController::class);

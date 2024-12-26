@@ -58,7 +58,7 @@ Pay
             </div>
             <!-- Modal body -->
             <div class="p-4 space-y-4 md:p-5">
-                <form action="{{route('accounts_receive.store')}}" method="post">
+                <form action="{{route('accounts_payable.store')}}" method="post">
                     @csrf
                     <input type="hidden" name="accounts_payable_id" value="{{$data->id}}">
                     <div class="max-w-sm mt-3">

@@ -55,7 +55,7 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        //
+        return view('dashboard.suppliers.edit', ['data' => $supplier]);
     }
 
     /**
@@ -63,7 +63,17 @@ class SupplierController extends Controller
      */
     public function update(Request $request, Supplier $supplier)
     {
-        //
+        $request->validate([
+            'company' => 'required',
+            'owner' => 'required',
+            'email' => 'required|email|unique:suppliers,email,' . $supplier->id,
+            'phone' => 'required',
+            'address' => 'required'
+        ]);
+
+        $supplier->update($request->all());
+
+        return redirect()->route('suppliers.index')->with('success', 'Supplier has been updated successfully');
     }
 
     /**

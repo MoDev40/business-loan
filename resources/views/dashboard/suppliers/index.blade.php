@@ -46,7 +46,7 @@
                     {{$supplier->address}}
                 </td>
                 <td class="flex flex-col px-6 py-4 text-start">
-                    <a href="" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="{{route('suppliers.edit',$supplier)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                     <form action="" method="post">
                         @csrf
                         @method('DELETE')

@@ -53,7 +53,17 @@ class AccountsPayablePaymentController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = AccountsPayablePayment::find($id);
+
+        $instance = AccountsPayablePayment::with('accountsPayable')->where('accounts_payable_id', $data->accounts_payable_id);
+
+        $loan = $instance->get()[0]->accountsPayable->amount;
+
+        $totalPayed = $instance->sum('amount');
+
+        $max_exp_amount = ($loan + $data->amount) - $totalPayed;
+
+        return view('dashboard.suppliers.payment.edit', ['max_exp_amount' => $max_exp_amount, 'payment' => $data]);
     }
 
     /**
@@ -61,7 +71,17 @@ class AccountsPayablePaymentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'amount' => 'required|numeric|min:0',
+            'payment_date' => 'required|date',
+            'accounts_payable_id' => 'required|exists:accounts_payable,id',
+        ]);
+
+        $data = AccountsPayablePayment::find($id);
+
+        $data->update($request->all());
+
+        return redirect()->route('accounts_payable.index')->with('success', "Your payment has been updated successfully");
     }
 
     /**

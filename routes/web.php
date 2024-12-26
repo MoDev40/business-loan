@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountsPayableController;
 use App\Http\Controllers\AccountsReceivableController;
 use App\Http\Controllers\AccountsReceivablePaymentController;
 use App\Http\Controllers\CustomerController;
@@ -26,5 +27,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::resource('/dashboard/customers', CustomerController::class);
 Route::resource('/dashboard/suppliers', SupplierController::class);
 
+Route::resource('/dashboard/loan/payable', AccountsPayableController::class);
 Route::resource('/dashboard/loan/receivable', AccountsReceivableController::class);
 Route::resource('/dashboard/payment/accounts_receive', AccountsReceivablePaymentController::class);

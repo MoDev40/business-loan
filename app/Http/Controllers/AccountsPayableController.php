@@ -95,6 +95,7 @@ class AccountsPayableController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        AccountsPayable::destroy($id);
+        return redirect()->route('payable.index')->with('success', 'Loan updated successfully');
     }
 }

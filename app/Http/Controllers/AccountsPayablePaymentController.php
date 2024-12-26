@@ -89,6 +89,8 @@ class AccountsPayablePaymentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        AccountsPayablePayment::destroy($id);
+
+        return redirect()->route('accounts_payable.index')->with('success', "Your payment has been deleted successfully");
     }
 }

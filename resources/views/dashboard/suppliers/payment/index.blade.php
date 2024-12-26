@@ -32,7 +32,7 @@
                 </td>
                 <td class="flex flex-col items-start px-6 py-5 text-start">
                     <a href="{{route('accounts_payable.edit',$payment)}}" class="font-medium text-yellow-500 hover:underline">Edit</a>
-                    <form action="" method="post">
+                    <form action="{{route('accounts_payable.destroy',$payment)}}" method="post">
                         @csrf
                         @method('DELETE')
                         <button onclick="return confirm('Are you sure you want to delete this payment record?')" type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">

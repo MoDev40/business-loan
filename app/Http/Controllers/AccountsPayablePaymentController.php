@@ -12,7 +12,8 @@ class AccountsPayablePaymentController extends Controller
      */
     public function index()
     {
-        //
+        $data = AccountsPayablePayment::all();
+        return view('dashboard.suppliers.payment.index', ['payments' =>  $data]);
     }
 
     /**

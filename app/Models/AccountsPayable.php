@@ -15,7 +15,7 @@ class AccountsPayable extends Model
 
     public function supplier(): BelongsTo
     {
-        return $this->belongsTo(Supplier::class, 'id');
+        return $this->belongsTo(Supplier::class);
     }
 
     public function accountsPayablePayment(): HasMany

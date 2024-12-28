@@ -12,6 +12,6 @@ class AccountsPayablePayment extends Model
     protected $fillable = ['amount', 'accounts_payable_id', 'payment_date'];
     public function accountsPayable(): BelongsTo
     {
-        return $this->belongsTo(AccountsPayable::class, 'id');
+        return $this->belongsTo(AccountsPayable::class);
     }
 }
